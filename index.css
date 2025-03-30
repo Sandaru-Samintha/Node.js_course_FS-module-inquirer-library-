@@ -1,0 +1,26 @@
+.main{
+  width: 100%;
+  padding: 50px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.card{
+  width: fit-content;
+  padding: 20px;
+  background-color: gray;
+}
+.infor{
+  display: flex;
+  align-items: center;
+  gap: 35px;
+}
+.subjects{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 12px;
+  gap:20px;
+  background-color: rgb(88, 81, 81);
+  border-radius: 7px;
+}
