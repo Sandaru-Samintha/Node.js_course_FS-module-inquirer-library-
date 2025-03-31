@@ -1,7 +1,7 @@
-import fileRead from "./libs/readfile.js";
 import fileWrite from "./libs/writefile.js";
 import {log} from "node:console";
 import inquirer from "inquirer";
+import { cardGen } from "./libs/htmlCardGen.js";
 
 
 //------ 1 -----
@@ -92,7 +92,10 @@ import inquirer from "inquirer";
 const studentInfor =[];
 
 ( async ()=>{
+
+  let allCards = '';
   do{
+
     const data = await inquirer.prompt([
       {
         type:"input",
@@ -117,7 +120,7 @@ const studentInfor =[];
       },
       {
         type:"list",
-        name:"class",
+        name:"stuclass",
         message:"Enter Student Class : ",
         choices:['class1','class2','class3','class4'],
       },
@@ -144,5 +147,69 @@ const studentInfor =[];
       break;
     }
   }while(true);
-  log(studentInfor);
+  //log(studentInfor);
+
+
+  studentInfor.forEach(({name,age,city,gender,stuclass,subject}/*destuctur the element using foreach*/) => {
+    allCards+= cardGen(name,age,gender,stuclass,city,subject);
+  });
+
+  log(allCards);
+
+  let htmlContent =`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Student Information</title>
+      <link rel="stylesheet" href="index.css"> 
+    </head>
+    <body>
+      <main class="main">
+        ${allCards}
+      </main>
+    </body>
+    </html>
+  `;
+  fileWrite("index.html",htmlContent,(d)=>log(d));
 })();
+
+
+
+
+
+//this should be created in indexedDB.html  like top
+
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//   <meta charset="UTF-8">
+//   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//   <title>Student Information</title>
+//   <link rel="stylesheet" href="index.css">
+// </head>
+// <body>
+//   <main class="main">
+//     <div class="card">
+//       <h1 class="name">Sandaru</h1>
+//       <div class="infor">
+//         <div>
+//           <p>Age: 24</p>
+//           <p>Gender: male</p>
+//         </div>
+//         <div>
+//           <p>City: city</p>
+//           <p>Class: Class1</p>
+//         </div>
+//       </div>
+//       <h3>Subjects</h3>
+//       <div class="subjects">
+//         <p>java</p>
+//         <p>javascript</p>
+//         <p>golang</p>
+//       </div>
+//     </div>
+//   </main>
+// </body>
+// </html>
